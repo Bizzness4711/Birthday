@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Web sitemiz şu anda bakım çalışması nedeniyle geçici olarak kullanılamıyor."
+  >
+
+  <title>Sitemiz Bakımda</title>
+
+  <style>
+    /* Genel sıfırlama */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #8b5cf6;
+      --secondary-color: #3b82f6;
+      --text-color: #ffffff;
+      --muted-color: rgba(255, 255, 255, 0.72);
+      --card-color: rgba(255, 255, 255, 0.08);
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text-color);
+
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(139, 92, 246, 0.35),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at bottom right,
+          rgba(59, 130, 246, 0.32),
+          transparent 35%
+        ),
+        linear-gradient(135deg, #080b18, #11162b, #090b17);
+    }
+
+    /* Arka plandaki hareketli ışıklar */
+    .background-shape {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(12px);
+      opacity: 0.35;
+      animation: floating 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .shape-one {
+      top: 8%;
+      left: 8%;
+      width: 180px;
+      height: 180px;
+      background: var(--primary-color);
+    }
+
+    .shape-two {
+      right: 8%;
+      bottom: 8%;
+      width: 220px;
+      height: 220px;
+      background: var(--secondary-color);
+      animation-delay: -4s;
+    }
+
+    @keyframes floating {
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-30px) scale(1.08);
+      }
+    }
+
+    /* Sayfa düzeni */
+    .maintenance-page {
+      position: relative;
+      z-index: 2;
+
+      width: 100%;
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 24px;
+    }
+
+    .maintenance-card {
+      width: min(100%, 720px);
+      padding: 50px 40px;
+
+      text-align: center;
+
+      background: var(--card-color);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 30px;
+
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      animation: cardOpen 0.9s ease forwards;
+    }
+
+    @keyframes cardOpen {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Bakım simgesi */
+    .maintenance-icon {
+      position: relative;
+
+      width: 120px;
+      height: 120px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      margin: 0 auto 28px;
+
+      border-radius: 50%;
+
+      background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.25),
+        rgba(59, 130, 246, 0.25)
+      );
+
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .maintenance-icon::before {
+      content: "";
+
+      position: absolute;
+      inset: -8px;
+
+      border: 2px solid transparent;
+      border-top-color: var(--primary-color);
+      border-right-color: var(--secondary-color);
+      border-radius: 50%;
+
+      animation: rotateIcon 2s linear infinite;
+    }
+
+    @keyframes rotateIcon {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .maintenance-icon span {
+      font-size: 54px;
+      animation: toolMove 1.5s ease-in-out infinite;
+    }
+
+    @keyframes toolMove {
+      0%,
+      100% {
+        transform: rotate(-8deg);
+      }
+
+      50% {
+        transform: rotate(8deg);
+      }
+    }
+
+    /* Yazılar */
+    .status-label {
+      display: inline-block;
+
+      margin-bottom: 16px;
+      padding: 8px 17px;
+
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+
+      color: #ddd6fe;
+
+      background: rgba(139, 92, 246, 0.18);
+      border: 1px solid rgba(139, 92, 246, 0.38);
+      border-radius: 50px;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+
+      font-size: clamp(34px, 7vw, 62px);
+      line-height: 1.08;
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      background: linear-gradient(
+        90deg,
+        #c4b5fd,
+        #60a5fa
+      );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .description {
+      max-width: 570px;
+      margin: 0 auto;
+
+      color: var(--muted-color);
+
+      font-size: clamp(16px, 2.5vw, 19px);
+      line-height: 1.7;
+    }
+
+    /* Yükleme çubuğu */
+    .progress-area {
+      max-width: 500px;
+      margin: 34px auto 0;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+
+      margin-bottom: 10px;
+
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+
+      overflow: hidden;
+
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+    }
+
+    .progress-value {
+      width: 70%;
+      height: 100%;
+
+      background: linear-gradient(
+        90deg,
+        var(--primary-color),
+        var(--secondary-color)
+      );
+
+      border-radius: 50px;
+
+      animation: progressAnimation 2s ease forwards;
+    }
+
+    @keyframes progressAnimation {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 70%;
+      }
+    }
+
+    /* Buton */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+
+      min-width: 155px;
+      padding: 14px 24px;
+
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;
+
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .primary-button {
+      background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--secondary-color)
+      );
+
+      box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+    }
+
+    .secondary-button {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    .primary-button:hover {
+      box-shadow: 0 18px 45px rgba(99, 102, 241, 0.45);
+    }
+
+    .secondary-button:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .footer-text {
+      margin-top: 35px;
+
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 13px;
+    }
+
+    /* Mobil uyumluluk */
+    @media (max-width: 600px) {
+      .maintenance-page {
+        padding: 16px;
+      }
+
+      .maintenance-card {
+        padding: 38px 20px;
+        border-radius: 24px;
+      }
+
+      .maintenance-icon {
+        width: 95px;
+        height: 95px;
+      }
+
+      .maintenance-icon span {
+        font-size: 43px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .shape-one,
+      .shape-two {
+        width: 140px;
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hareketli arka plan şekilleri -->
+  <div class="background-shape shape-one"></div>
+  <div class="background-shape shape-two"></div>
+
+  <main class="maintenance-page">
+
+    <section class="maintenance-card">
+
+      <div class="maintenance-icon">
+        <span>🛠️</span>
+      </div>
+
+      <div class="status-label">
+        BAKIM ÇALIŞMASI
+      </div>
+
+      <h1>
+        Sitemiz Şu Anda <span>Bakımda</span>
+      </h1>
+
+      <p class="description">
+        Size daha iyi bir deneyim sunabilmek için web sitemizi
+        yeniliyoruz. Çok yakında geliştirilmiş hâlimizle yeniden
+        burada olacağız.
+      </p>
+
+      <div class="progress-area">
+
+        <div class="progress-info">
+          <span>Bakım devam ediyor</span>
+          <span>%70</span>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-value"></div>
+        </div>
+
+      </div>
+
+      <div class="buttons">
+
+        <button
+          class="button primary-button"
+          type="button"
+          onclick="window.location.reload()"
+        >
+          Sayfayı Yenile
+        </button>
+
+        <a
+          class="button secondary-button"
+          href="mailto:iletisim@siteadi.com"
+        >
+          Bize Ulaşın
+        </a>
+
+      </div>
+
+      <p class="footer-text">
+        © 2026 Site Adı — Anlayışınız için teşekkür ederiz.
+      </p>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
