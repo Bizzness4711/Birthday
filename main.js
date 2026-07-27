@@ -2,7 +2,7 @@
   'use strict';
 
   const CONFIG = Object.freeze({
-    togetherSince: '2023-02-08T00:00:00+03:00',
+    togetherSince: '2023-02-18T00:00:00+03:00',
     letterUnlocksAt: '2026-08-02T00:00:00+03:00',
     secretPassword: 'vesilem',
     midyat: { latitude: 37.419, longitude: 41.339, utcOffsetMinutes: 180 },
