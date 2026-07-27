@@ -1,473 +1,471 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="Web sitemiz şu anda bakım çalışması nedeniyle geçici olarak kullanılamıyor."
-  >
-
-  <title>Sitemiz Bakımda</title>
-
-  <style>
-    /* Genel sıfırlama */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary-color: #8b5cf6;
-      --secondary-color: #3b82f6;
-      --text-color: #ffffff;
-      --muted-color: rgba(255, 255, 255, 0.72);
-      --card-color: rgba(255, 255, 255, 0.08);
-    }
-
-    body {
-      min-height: 100vh;
-      overflow: hidden;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text-color);
-
-      background:
-        radial-gradient(
-          circle at top left,
-          rgba(139, 92, 246, 0.35),
-          transparent 35%
-        ),
-        radial-gradient(
-          circle at bottom right,
-          rgba(59, 130, 246, 0.32),
-          transparent 35%
-        ),
-        linear-gradient(135deg, #080b18, #11162b, #090b17);
-    }
-
-    /* Arka plandaki hareketli ışıklar */
-    .background-shape {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(12px);
-      opacity: 0.35;
-      animation: floating 8s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .shape-one {
-      top: 8%;
-      left: 8%;
-      width: 180px;
-      height: 180px;
-      background: var(--primary-color);
-    }
-
-    .shape-two {
-      right: 8%;
-      bottom: 8%;
-      width: 220px;
-      height: 220px;
-      background: var(--secondary-color);
-      animation-delay: -4s;
-    }
-
-    @keyframes floating {
-      0%,
-      100% {
-        transform: translateY(0) scale(1);
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6f528f">
+  <meta name="description" content="Y ve V için hazırlanmış romantik, yaşayan bir hatıra defteri.">
+  <title>Y💙V — Hatıra Defteri</title>
+  <link rel="stylesheet" href="styles.css?v=20260727-3">
+  <script>
+    window.__memoryBookReady = false;
+    window.setTimeout(function () {
+      if (!window.__memoryBookReady) {
+        var status = document.getElementById('loadingStatus');
+        var retry = document.getElementById('loadingRetry');
+        if (status) status.textContent = 'Defter beklenenden uzun sürede hazırlanıyor…';
+        if (retry) {
+          retry.hidden = false;
+          retry.onclick = function () { window.location.reload(); };
+        }
       }
-
-      50% {
-        transform: translateY(-30px) scale(1.08);
-      }
-    }
-
-    /* Sayfa düzeni */
-    .maintenance-page {
-      position: relative;
-      z-index: 2;
-
-      width: 100%;
-      min-height: 100vh;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      padding: 24px;
-    }
-
-    .maintenance-card {
-      width: min(100%, 720px);
-      padding: 50px 40px;
-
-      text-align: center;
-
-      background: var(--card-color);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 30px;
-
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-
-      animation: cardOpen 0.9s ease forwards;
-    }
-
-    @keyframes cardOpen {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.96);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    /* Bakım simgesi */
-    .maintenance-icon {
-      position: relative;
-
-      width: 120px;
-      height: 120px;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      margin: 0 auto 28px;
-
-      border-radius: 50%;
-
-      background: linear-gradient(
-        135deg,
-        rgba(139, 92, 246, 0.25),
-        rgba(59, 130, 246, 0.25)
-      );
-
-      border: 1px solid rgba(255, 255, 255, 0.16);
-    }
-
-    .maintenance-icon::before {
-      content: "";
-
-      position: absolute;
-      inset: -8px;
-
-      border: 2px solid transparent;
-      border-top-color: var(--primary-color);
-      border-right-color: var(--secondary-color);
-      border-radius: 50%;
-
-      animation: rotateIcon 2s linear infinite;
-    }
-
-    @keyframes rotateIcon {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .maintenance-icon span {
-      font-size: 54px;
-      animation: toolMove 1.5s ease-in-out infinite;
-    }
-
-    @keyframes toolMove {
-      0%,
-      100% {
-        transform: rotate(-8deg);
-      }
-
-      50% {
-        transform: rotate(8deg);
-      }
-    }
-
-    /* Yazılar */
-    .status-label {
-      display: inline-block;
-
-      margin-bottom: 16px;
-      padding: 8px 17px;
-
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-
-      color: #ddd6fe;
-
-      background: rgba(139, 92, 246, 0.18);
-      border: 1px solid rgba(139, 92, 246, 0.38);
-      border-radius: 50px;
-    }
-
-    h1 {
-      margin-bottom: 18px;
-
-      font-size: clamp(34px, 7vw, 62px);
-      line-height: 1.08;
-      letter-spacing: -2px;
-    }
-
-    h1 span {
-      background: linear-gradient(
-        90deg,
-        #c4b5fd,
-        #60a5fa
-      );
-
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .description {
-      max-width: 570px;
-      margin: 0 auto;
-
-      color: var(--muted-color);
-
-      font-size: clamp(16px, 2.5vw, 19px);
-      line-height: 1.7;
-    }
-
-    /* Yükleme çubuğu */
-    .progress-area {
-      max-width: 500px;
-      margin: 34px auto 0;
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-
-      margin-bottom: 10px;
-
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 13px;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 10px;
-
-      overflow: hidden;
-
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50px;
-    }
-
-    .progress-value {
-      width: 70%;
-      height: 100%;
-
-      background: linear-gradient(
-        90deg,
-        var(--primary-color),
-        var(--secondary-color)
-      );
-
-      border-radius: 50px;
-
-      animation: progressAnimation 2s ease forwards;
-    }
-
-    @keyframes progressAnimation {
-      from {
-        width: 0;
-      }
-
-      to {
-        width: 70%;
-      }
-    }
-
-    /* Buton */
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-
-      margin-top: 34px;
-    }
-
-    .button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-
-      min-width: 155px;
-      padding: 14px 24px;
-
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: bold;
-      text-decoration: none;
-
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease;
-    }
-
-    .primary-button {
-      background: linear-gradient(
-        135deg,
-        var(--primary-color),
-        var(--secondary-color)
-      );
-
-      box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
-    }
-
-    .secondary-button {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-    }
-
-    .button:hover {
-      transform: translateY(-3px);
-    }
-
-    .primary-button:hover {
-      box-shadow: 0 18px 45px rgba(99, 102, 241, 0.45);
-    }
-
-    .secondary-button:hover {
-      background: rgba(255, 255, 255, 0.14);
-    }
-
-    .footer-text {
-      margin-top: 35px;
-
-      color: rgba(255, 255, 255, 0.45);
-      font-size: 13px;
-    }
-
-    /* Mobil uyumluluk */
-    @media (max-width: 600px) {
-      .maintenance-page {
-        padding: 16px;
-      }
-
-      .maintenance-card {
-        padding: 38px 20px;
-        border-radius: 24px;
-      }
-
-      .maintenance-icon {
-        width: 95px;
-        height: 95px;
-      }
-
-      .maintenance-icon span {
-        font-size: 43px;
-      }
-
-      h1 {
-        letter-spacing: -1px;
-      }
-
-      .buttons {
-        flex-direction: column;
-      }
-
-      .button {
-        width: 100%;
-      }
-
-      .shape-one,
-      .shape-two {
-        width: 140px;
-        height: 140px;
-      }
-    }
-  </style>
+    }, 7000);
+  </script>
 </head>
+<body data-theme="morning">
+  <!--
+    ARKA PLAN MÜZİĞİ:
+    Kendi MP3 dosyanızı assets/audio/background-music.mp3 adıyla değiştirmeniz yeterlidir.
+    Farklı bir dosya adı kullanırsanız aşağıdaki src yolunu güncelleyin.
+  -->
+  <audio id="backgroundMusic" loop preload="metadata" playsinline aria-hidden="true">
+    <source src="assets/audio/background-music.mp3" type="audio/mpeg">
+  </audio>
+  <noscript>
+    <div class="noscript-message">Bu hatıra defterinin sayfalarını çevirebilmek için JavaScript’i etkinleştirmen gerekiyor. 💜</div>
+  </noscript>
 
-<body>
+  <div class="loading-screen" id="loadingScreen" aria-live="polite">
+    <div class="loading-book" aria-hidden="true"><span></span><span></span><span></span></div>
+    <p class="loading-title">Hatıralar özenle yerleştiriliyor…</p>
+    <div class="loading-track"><span id="loadingBar"></span></div>
+    <p class="loading-status" id="loadingStatus">Baskı yazıcıdan çıkıyor.</p>
+    <button class="paper-button small" id="loadingRetry" type="button" hidden>Tekrar dene</button>
+  </div>
 
-  <!-- Hareketli arka plan şekilleri -->
-  <div class="background-shape shape-one"></div>
-  <div class="background-shape shape-two"></div>
+  <div class="ambient-scene" aria-hidden="true">
+    <div class="sun-glow"></div>
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
+    <div class="stars">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="midyat-silhouette"></div>
+  </div>
 
-  <main class="maintenance-page">
+  <button class="moon-button" id="moonButton" type="button" aria-label="Ayın sakladığı sırrı keşfet" hidden></button>
 
-    <section class="maintenance-card">
-
-      <div class="maintenance-icon">
-        <span>🛠️</span>
-      </div>
-
-      <div class="status-label">
-        BAKIM ÇALIŞMASI
-      </div>
-
-      <h1>
-        Sitemiz Şu Anda <span>Bakımda</span>
-      </h1>
-
-      <p class="description">
-        Size daha iyi bir deneyim sunabilmek için web sitemizi
-        yeniliyoruz. Çok yakında geliştirilmiş hâlimizle yeniden
-        burada olacağız.
-      </p>
-
-      <div class="progress-area">
-
-        <div class="progress-info">
-          <span>Bakım devam ediyor</span>
-          <span>%70</span>
-        </div>
-
-        <div class="progress-bar">
-          <div class="progress-value"></div>
-        </div>
-
-      </div>
-
-      <div class="buttons">
-
-        <button
-          class="button primary-button"
-          type="button"
-          onclick="window.location.reload()"
-        >
-          Sayfayı Yenile
+  <section class="intro-screen" id="introScreen" aria-labelledby="coverTitle" hidden>
+    <div class="intro-shadow"></div>
+    <div class="intro-book">
+      <div class="intro-cover">
+        <span class="cover-corner corner-one"></span>
+        <span class="cover-corner corner-two"></span>
+        <p class="cover-kicker">birlikte yaşayıp yaşlandığımız</p>
+        <h1 id="coverTitle">BİZİM <br> Hatıra<br>Defterimiz</h1>
+        <div class="cover-heart">Y<span>💙</span>V</div>
+        <p class="cover-date">08 • 02 • 2023</p>
+        <p class="tireTitle">Unutulmaz Tarih</p>
+        <button class="open-book-button" id="openBookButton" type="button">
+          <span>Dokun ve Aç</span>
+          <small>Dokunduktan Sonra Kendini Herşey İçin Hazırla</small>
         </button>
+      </div>
+      <div class="intro-pages" aria-hidden="true"></div>
+    </div>
+  </section>
 
-        <a
-          class="button secondary-button"
-          href="mailto:obomba44@gmail.com"
-        >
-          Bize Ulaşın
-        </a>
+  <main class="memory-app" id="memoryApp" hidden>
+    <header class="app-header">
+      <div>
+        <span class="tiny-label">Y💙V</span>
+        <span class="theme-label" id="themeLabel">Midyat’ta sabah</span>
+      </div>
+      <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" aria-label="Sesleri kapat">
+        <span aria-hidden="true">♪</span><span class="sound-label">Ses açık</span>
+      </button>
+    </header>
 
+    <section class="book-stage" aria-label="Romantik hatıra defteri">
+      <button class="nav-arrow nav-prev" id="prevPage" type="button" aria-label="Önceki sayfa">
+        <span aria-hidden="true"><</span>
+      </button>
+
+      <div class="book-shell" id="bookShell">
+        <div class="book-spine" aria-hidden="true"></div>
+        <div class="page-edges" aria-hidden="true"></div>
+        <div class="bookmark" role="img" aria-label="Y mavi kalp V yazılı mor ayraç">
+          <span>Y💙V</span>
+        </div>
+
+        <div class="book-pages" id="bookPages">
+          <article class="book-page" data-page-title="Başlangıç">
+            <span class="tape tape-left" aria-hidden="true"></span>
+            <span class="doodle doodle-heart" aria-hidden="true">♡</span>
+            <div class="page-content centered-page">
+              <p class="handwritten-note">Biricik Karıma,</p>
+              <h2>Bizim küçük<br><em>sonsuzluğumuz</em></h2>
+              <div class="ink-divider"><span>✦</span></div>
+              <p class="lead-copy">Bazı hikâyeler bir tarihle başlar; sonra her gün yeniden yazılır.</p>
+              <p class="date-script">Seni görmediğim günden beri…</p>
+              <span class="turn-hint">sayfanın köşesini çevir →</span>
+            </div>
+          </article>
+
+          <article class="book-page page-counters paper-aged" data-page-title="Bizim Zamanımız">
+            <span class="coffee-stain" aria-hidden="true"></span>
+            <span class="paper-fold top-right" aria-hidden="true"></span>
+            <div class="page-content">
+              <p class="page-number">02</p>
+              <p class="eyebrow">zamanın en güzel hâli</p>
+              <h2>Ne zamandır <span class="marker-highlight">biziz?</span></h2>
+              <div class="counter-panel" aria-live="off">
+                <p class="counter-caption">Birbirimize olan sevgini arttığı süre</p>
+                <div class="counter-grid" id="togetherCounter">
+                  <div><strong data-unit="days">0</strong><span>gün</span></div>
+                  <div><strong data-unit="hours">00</strong><span>saat</span></div>
+                  <div><strong data-unit="minutes">00</strong><span>dakika</span></div>
+                  <div><strong data-unit="seconds">00</strong><span>saniye</span></div>
+                </div>
+              </div>
+              <p class="scribble-note">ve saat hâlâ kalbimizden yana işliyor. ♡</p>
+            </div>
+          </article>
+
+          <article class="book-page page-photos paper-soft" data-page-title="Biriken Anılar">
+            <span class="tape tape-top" aria-hidden="true"></span>
+            <span class="doodle doodle-spark" aria-hidden="true">✦</span>
+            <p class="margin-pencil-note photo-choice-note">Bu fotoğrafı seçmek<br>2 saat sürdü. 😂</p>
+            <div class="page-content">
+              <p class="page-number">03</p>
+              <p class="eyebrow">biriken güzel anlar</p>
+              <h2>Bakınca hâlâ <em>gülümsediğim</em></h2>
+              <div class="photo-row">
+                <button class="photo-card tilt-left" type="button" aria-label="Birinci anı fotoğrafını çevir">
+                  <span class="photo-inner">
+                    <span class="photo-front">
+                      <span class="photo-tape" aria-hidden="true"></span>
+                      <span class="photo-heart" aria-hidden="true"></span>
+                      <img class="photo-turn-left" src="assets/images/1.jpeg" alt="Birinci anımız">
+                      <small>en sevdiğim günlerden</small>
+                    </span>
+                    <span class="photo-back"><b>Y💙V</b><small>Dokunsana</small></span>
+                  </span>
+                </button>
+                <button class="photo-card tilt-right" type="button" aria-label="İkinci anı fotoğrafını çevir">
+                  <span class="photo-inner">
+                    <span class="photo-front">
+                      <span class="photo-tape" aria-hidden="true"></span>
+                      <span class="photo-heart" aria-hidden="true"></span>
+                      <img src="assets/images/2.jpeg" alt="İkinci anımız">
+                      <small>iyi ki bu an var</small>
+                    </span>
+                    <span class="photo-back"><b>08.02</b><small>Bu hale gelmemizin sebebini öğrenmek için dokun</small></span>
+                  </span>
+                </button>
+              </div>
+              <p class="photo-tip"><span class="desktop-only">Üzerlerine gel; anılar netleşsin.</span><span class="mobile-only">Anıları görmek için fotoğraflara dokun.</span></p>
+            </div>
+          </article>
+
+          <article class="book-page page-notes paper-aged-corner" data-page-title="Küçük Notlar">
+            <span class="paper-fold bottom-left" aria-hidden="true"></span>
+            <span class="coffee-specks" aria-hidden="true"></span>
+            <div class="page-content">
+              <p class="page-number">04</p>
+              <p class="eyebrow">unutmak istemediklerim</p>
+              <h2>Kalbimin kenarına<br><span class="marker-highlight lavender">yazdığım şeyler</span></h2>
+              <div class="scrap-layout">
+                <div class="mini-photo">
+                  <img src="assets/images/4.jpeg" alt="Üçüncü anı için fotoğraf alanı">
+                  <span>Bizi benzettiğim fotoğraf</span>
+                </div>
+                <ul class="love-notes">
+                  <li>Gülüşünün içimi eve dönmüş gibi hissettirmesi.</li>
+                  <li>En sıradan günü bile hatıraya dönüştürmen.</li>
+                  <li>Yan yana olduğumuzda zamanın çok acele etmesi.</li>
+                  <li>Birlikte çekildiğimiz her fotoğrafın arkasında güzel bir hikaye saklı olması.</li>
+                </ul>
+              </div>
+              <button class="memory-gallery-trigger" id="openMemorySlider" type="button">
+                <span aria-hidden="true">✦</span>
+                Anılarımızı aç
+              </button>
+              <p class="pencil-note">Bazı şeylerin altı kalemle değil, kalple çizilir.</p>
+            </div>
+          </article>
+
+          <article class="book-page page-letter paper-rose" data-page-title="Geleceğe Mektup">
+            <span class="doodle doodle-flower" aria-hidden="true">❀</span>
+            <div class="page-content">
+              <p class="page-number">05</p>
+              <p class="eyebrow">geleceğe mühürlendi</p>
+              <h2>Zaman Dolduğunda<br><em>Bu Sırrı Öğrenebileceksin...</em></h2>
+              <div class="countdown-grid" id="letterCountdown" aria-live="off">
+                <div><strong data-unit="months">0</strong><span>ay</span></div>
+                <div><strong data-unit="days">0</strong><span>gün</span></div>
+                <div><strong data-unit="hours">00</strong><span>saat</span></div>
+                <div><strong data-unit="minutes">00</strong><span>dakika</span></div>
+                <div><strong data-unit="seconds">00</strong><span>saniye</span></div>
+              </div>
+              <h2><em>Az Daha Sabır Yawrucum</em></h2>
+              <button class="envelope locked" id="envelopeButton" type="button" aria-label="Tarihi gelince açılacak mektup">
+                <span class="envelope-back"></span>
+                <span class="envelope-paper">Vesilem’e…</span>
+                <span class="envelope-front"></span>
+                <span class="envelope-flap"></span>
+                <span class="wax-seal">YV</span>
+                <span class="envelope-heart" aria-hidden="true">♥</span>
+              </button>
+              <p class="envelope-status" id="envelopeStatus">Mühür, doğru zamanı bekliyor.</p>
+            </div>
+          </article>
+
+          <article class="book-page page-promise paper-soft" data-page-title="Bir Dilek">
+            <span class="tape tape-corner" aria-hidden="true"></span>
+            <span class="soft-stain" aria-hidden="true"></span>
+            <div class="page-content centered-page">
+              <p class="page-number">06</p>
+              <p class="eyebrow">bu sayfa hep burada kalsın</p>
+              <blockquote>
+                “Yıllar sonra bu defteri yeniden açtığımızda,<br>
+                bugün birbirimize baktığımız gibi gülümseyelim.”
+              </blockquote>
+              <div class="pressed-flower" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><span></span>
+              </div>
+              <p class="signature">Senin İçin Tasarlandı Sana Özel 😉<strong></strong></p>
+            </div>
+          </article>
+
+          <article class="book-page page-finale paper-night-ink" data-page-title="Son Sayfa">
+            <span class="doodle constellation" aria-hidden="true">✦ · ｡ * ✧</span>
+            <div class="page-content centered-page">
+              <p class="page-number">07</p>
+              <div class="completion-badge" id="completionBadge" aria-live="polite">
+                <span class="badge-lock" aria-hidden="true">♢</span>
+                <span class="badge-trophy" aria-hidden="true">🏆</span>
+                <p class="eyebrow">son hatıra</p>
+                <h2 id="completionTitle">Defter henüz bitmedi…</h2>
+                <p id="completionText">Bazı sırlar ve satırlar keşfedilmeyi bekliyor.</p>
+                <div class="badge-ribbon"><span>Y</span><b>💙</b><span>V</span></div>
+              </div>
+              <div class="completion-progress" id="completionProgress"></div>
+            </div>
+          </article>
+
+          <article class="book-page page-endpaper paper-soft" data-page-title="Arka Kapak" data-decorative="true" aria-hidden="true">
+            <div class="page-content centered-page endpaper-content">
+              <span class="endpaper-ornament" aria-hidden="true">✦</span>
+              <p>her son, bizim için<br>yeni bir başlangıç…</p>
+              <strong>Y💙V</strong>
+              <small>08 • 02 • 2023</small>
+            </div>
+          </article>
+        </div>
+
+        <div class="petal-layer" id="petalLayer" aria-hidden="true"></div>
       </div>
 
-      <p class="footer-text">
-        © 2026 Site Adı — Anlayışınız için teşekkür ederiz.
-      </p>
-
+      <button class="nav-arrow nav-next" id="nextPage" type="button" aria-label="Sonraki sayfa">
+        <span aria-hidden="true">›</span>
+      </button>
     </section>
 
+    <footer class="book-footer">
+      <div class="page-progress" id="pageProgress" role="group" aria-label="Sayfa konumu"></div>
+      <p id="pageAnnouncement" class="sr-only" aria-live="polite"></p>
+      <span class="swipe-hint">← kaydır veya köşelere dokun →</span>
+    </footer>
   </main>
 
+  <dialog class="paper-dialog" id="memoryDateDialog" aria-labelledby="memoryDateTitle">
+    <form method="dialog" id="memoryDateForm">
+      <span class="dialog-icon" aria-hidden="true">⌛</span>
+      <p class="eyebrow">gelecekteki sana</p>
+      <h2 id="memoryDateTitle">Bu anı hangi tarihte tekrar hatırlamak istersin?</h2>
+      <p>Seçtiğin gün geldiğinde defter sana yıllar öncesinden küçük bir not bırakacak.</p>
+      <label class="date-field">Hatırlama tarihi<input id="memoryDateInput" type="date" required></label>
+      <button class="paper-button" type="submit">Tarihi kalbimde sakla</button>
+      <small>Bu soru yalnızca bir kez sorulur ve seçim bu cihazda saklanır.</small>
+    </form>
+  </dialog>
+
+  <dialog class="paper-dialog future-dialog" id="futureMessageDialog" aria-labelledby="futureMessageTitle">
+    <div class="dialog-body">
+      <button class="dialog-close" data-close-dialog type="button" aria-label="Mesajı kapat">×</button>
+      <span class="dialog-icon" aria-hidden="true">💙</span>
+      <p class="eyebrow" id="futureMessageTitle">geçmişten bir not</p>
+      <blockquote>“Bu satırları yıllar önce senin için hazırlamıştım... Umarım hâlâ seni aynı gülümsemeyle hatırlatıyordur. 💙”</blockquote>
+      <button class="paper-button" data-close-dialog type="button">Hatırladım</button>
+    </div>
+  </dialog>
+
+  <dialog class="paper-dialog secret-dialog" id="secretDialog" aria-labelledby="secretDialogTitle">
+    <form method="dialog" id="secretForm">
+      <button class="dialog-close" data-close-dialog type="button" aria-label="Şifre penceresini kapat">×</button>
+      <span class="dialog-icon" aria-hidden="true">☾</span>
+      <p class="eyebrow">ayın sakladığı sır</p>
+      <h2 id="secretDialogTitle">Kalbin şifresini fısılda</h2>
+      <label class="secret-field">Şifre<input id="secretInput" type="password" autocomplete="off" spellcheck="false" placeholder="•••••••" required></label>
+      <p class="form-message" id="secretMessage" aria-live="polite"></p>
+      <button class="paper-button" type="submit">Sırrı aç</button>
+    </form>
+  </dialog>
+
+  <dialog class="photo-dialog" id="secretPhotoDialog" aria-labelledby="secretPhotoCaption">
+    <div class="secret-photo-wrap">
+      <button class="dialog-close light" data-close-dialog type="button" aria-label="Fotoğrafı kapat">×</button>
+      <div class="secret-polaroid">
+        <img src="assets/images/gizli.jpg" alt="Ayın sakladığı özel fotoğraf">
+        <p id="secretPhotoCaption">Ay bile bu anıyı saklamış. 💙</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="memory-slider-dialog" id="memorySliderDialog" aria-labelledby="memorySliderTitle">
+    <div class="memory-slider-shell">
+      <div class="memory-slider-backdrop" aria-hidden="true">
+        <img class="is-active" src="assets/images/2.jpeg" alt="">
+        <img src="assets/images/2.jpeg" alt="">
+      </div>
+      <div class="memory-slider-tint" aria-hidden="true"></div>
+
+      <button class="dialog-close light memory-slider-close" data-close-dialog type="button" aria-label="Anı galerisini kapat">×</button>
+
+      <header class="memory-slider-header">
+        <p>bizden kalan kareler</p>
+        <h2 id="memorySliderTitle">Anılarımızın İçinden</h2>
+      </header>
+
+      <div class="memory-slider-viewport" id="memorySliderViewport">
+        <div class="memory-slider-track" id="memorySliderTrack">
+          <button class="memory-slide" type="button" data-memory-slide aria-label="Birinci anıyı göster">
+            <img src="assets/images/2.jpeg" alt="Birinci anımız" loading="lazy" decoding="async">
+            <span>En sevdiğim günlerden.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="İkinci anıyı göster">
+            <img class="photo-turn-left" src="assets/images/15.jpg" alt="İkinci anımız" loading="lazy" decoding="async">
+            <span>İyi ki bu an var.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="3. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/3.jpeg" alt="3. anımız" loading="lazy" decoding="async">
+            <span>Kalbimde kalan bir kare.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="4. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/5.jpg" alt="4. anımız" loading="lazy" decoding="async">
+            <span>Zaman dursun istediğim o an.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="5. anıyı göster">
+            <img src="assets/images/6.jpg" alt="5. anımız" loading="lazy" decoding="async">
+            <span>Ömür boyu saklanası bir hatıra.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="6. anıyı göster">
+            <img src="assets/images/7.jpg" alt="6. anımız" loading="lazy" decoding="async">
+            <span>İçimde hiç solmayan bir çiçek.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="7. anıyı göster">
+            <img src="assets/images/8.jpg" alt="7. anımız" loading="lazy" decoding="async">
+            <span>Yolumu aydınlatan o güzel detay.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="8. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/9.jpg" alt="8. anımız" loading="lazy" decoding="async">
+            <span>Gönlümün en güzel misafiri.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="9. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/10.jpg" alt="9. anımız" loading="lazy" decoding="async">
+            <span>Geriye kalan en saf tebessüm.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="10. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/11.jpg" alt="10. anımız" loading="lazy" decoding="async">
+            <span>Hafızamın en değerli köşesi.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="11. anıyı göster">
+            <img src="assets/images/12.jpg" alt="11. anımız" loading="lazy" decoding="async">
+            <span>İyi ki yollarımız kesişmiş.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="12. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/13.jpg" alt="12. anımız" loading="lazy" decoding="async">
+            <span>Yıllar geçse de silinmeyecek iz.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="13. anıyı göster">
+            <img src="assets/images/14.jpg" alt="13. anımız" loading="lazy" decoding="async">
+            <span>Zamanın akışını unutturan o an.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="14. anıyı göster">
+            <img src="assets/images/16.jpg" alt="14. anımız" loading="lazy" decoding="async">
+            <span>Kalbimin attığı en güzel ritim.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="15. anıyı göster">
+            <img class="photo-turn-right" src="assets/images/17.jpg" alt="15. anımız" loading="lazy" decoding="async">
+            <span>Gözlerimi kapattığımda gördüğüm ilk şey.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="16. anıyı göster">
+            <img src="assets/images/18.jpg" alt="16. anımız" loading="lazy" decoding="async">
+            <span>Anılar defterimin en değerli sayfası.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="17. anıyı göster">
+            <img src="assets/images/19.jpg" alt="17. anımız" loading="lazy" decoding="async">
+            <span>Ruhuma iyi gelen sessiz bir sığınak.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="18. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/20.jpg" alt="18. anımız" loading="lazy" decoding="async">
+            <span>Yıllar sonra bile aynı sıcaklıkla hatırlanacak.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="19. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/21.jpg" alt="19. anımız" loading="lazy" decoding="async">
+            <span>İyi ki hayatıma dokunmuşsun.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="20. anıyı göster">
+            <img src="assets/images/22.jpg" alt="20. anımız" loading="lazy" decoding="async">
+            <span>İçimdeki çocuk hala o ana gülümser.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="21. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/23.jpg" alt="21. anımız" loading="lazy" decoding="async">
+            <span>Gönlüme kurulmuş en güzel taht.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="22. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/24.jpg" alt="22. anımız" loading="lazy" decoding="async">
+            <span>Hayatın bana verdiği en tatlı hediye.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="23. anıyı göster">
+            <img class="photo-turn-left" src="assets/images/25.jpeg" alt="23. anımız" loading="lazy" decoding="async">
+            <span>Geriye dönüp baktığımda gördüğüm ışık.</span>
+          </button>
+          <button class="memory-slide" type="button" data-memory-slide aria-label="24. anıyı göster">
+            <img class="photo-turn-right" src="assets/images/26.jpeg" alt="24. anımız" loading="lazy" decoding="async">
+            <span>Ruhumun en sakin köşesi.</span>
+          </button>
+        </div>
+
+        <button class="memory-slider-arrow memory-slider-prev" id="memorySliderPrev" type="button" aria-label="Önceki anı">‹</button>
+        <button class="memory-slider-arrow memory-slider-next" id="memorySliderNext" type="button" aria-label="Sonraki anı">›</button>
+      </div>
+
+      <footer class="memory-slider-footer">
+        <div class="memory-slider-dots" id="memorySliderDots" role="group" aria-label="Anı seçimi"></div>
+        <p id="memorySliderStatus" aria-live="polite"></p>
+      </footer>
+    </div>
+  </dialog>
+
+  <dialog class="paper-dialog letter-dialog" id="letterDialog" aria-labelledby="letterDialogTitle">
+    <div class="letter-sheet">
+      <button class="dialog-close" data-close-dialog type="button" aria-label="Mektubu kapat">×</button>
+      <p class="letter-date">02 Ağustos 2026</p>
+      <h2 id="letterDialogTitle">Vesilem’e,</h2>
+      <div class="letter-copy">
+        <p>Bu zarfı açtığın gün geldi. Belki aradan günler, aylar ve sayısız güzel an geçti; ama sana baktığım yer hâlâ aynı: kalbimin en güzel köşesi.</p>
+        <p>Seninle geçen her anı, dönüp yeniden okumak isteyeceğim bir satıra dönüştü. Gülüşün en sevdiğim tesadüf, yanımda oluşun en güzel huzurum oldu.</p>
+        <p>İyi ki yollarımız aynı hikâyede buluştu. İyi ki benim vesilemsin. 💙</p>
+      </div>
+      <p class="letter-signature">Daima senin…</p>
+      <button class="paper-button" id="markLetterRead" type="button">Mektubu kalbime aldım</button>
+    </div>
+  </dialog>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="main.js" defer></script>
 </body>
 </html>
